@@ -1,0 +1,56 @@
+export type TabKey = "narrative" | "grimoire" | "codex" | "inventory" | "craft";
+
+export type Condition =
+    | { type: "has_item"; itemId: string; qty: number }
+    | { type: "flag_true"; key: string };
+
+export type Effect =
+    | { type: "humanity"; delta: number }
+    | { type: "item_add"; itemId: string; qty: number }
+    | { type: "item_remove"; itemId: string; qty: number }
+    | { type: "flag_set"; key: string; value: boolean }
+    | { type: "discover_yokai"; speciesId: string }
+    | { type: "bind_yokai"; speciesId: string }
+    | { type: "craft"; recipeId: string }
+    | { type: "intel_add"; tag: string; qty?: number };
+
+export type Choice = {
+    label: string;
+    next: string;
+    requires?: Condition[];
+    effects?: Effect[];
+};
+
+export type Node = {
+    id: string;
+    text: string;
+    choices: Choice[];
+};
+
+export type YokaiInstance = {
+    instanceId: string;
+    speciesId: string;
+    loyalty: number;
+};
+
+export type GameState = {
+    currentNodeId: string;
+    humanity: number;
+    malleusHeat: number;
+    inventory: Record<string, number>;
+    discoveredYokai: Record<string, boolean>;
+    boundYokai: YokaiInstance[];
+    flags: Record<string, boolean>;
+    intelTags: Record<string, number>;
+};
+
+export const initialState: GameState = {
+    currentNodeId: "intro",
+    humanity: 50,
+    malleusHeat: 0,
+    inventory: {},
+    discoveredYokai: {},
+    boundYokai: [],
+    flags: {},
+    intelTags: {}
+};

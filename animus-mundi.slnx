@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="animus-mundi.esproj">
+    <Build />
+    <Deploy />
+  </Project>
+</Solution>

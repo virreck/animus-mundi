@@ -1,0 +1,10 @@
+{
+  "herald_of_conquest": {
+    "id": "herald_of_conquest",
+    "name": "The Herald of Conquest",
+    "horseman": "conquest",
+    "intelRequired": [ "propaganda", "surveillance", "coordination" ],
+    "identifyAt": 3,
+    "description": "A modern shadow behind coordinated movements: persuasion, control, and quiet domination."
+  }
+}

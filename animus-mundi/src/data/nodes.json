@@ -1,0 +1,141 @@
+{
+  "intro": {
+    "id": "intro",
+    "text": "London feels wrong. Not loud-wrong—coordinated-wrong. Posters appear overnight. Chants sync like metronomes. The city is learning to march.",
+    "choices": [
+      {
+        "label": "Review reports and head into the city",
+        "next": "london_hub"
+      },
+      {
+        "label": "Stand down (end demo)",
+        "next": "end"
+      }
+    ]
+  },
+
+  "london_hub": {
+    "id": "london_hub",
+    "text": "You arrive near Westminster. Police lines are calm. Too calm. Cameras pivot as if they recognize you.",
+    "choices": [
+      {
+        "label": "Investigate the speeches in Trafalgar Square (gain: propaganda)",
+        "next": "london_hub",
+        "effects": [
+          {
+            "type": "intel_add",
+            "tag": "propaganda"
+          }
+        ]
+      },
+      {
+        "label": "Trace the camera network and patrol routes (gain: surveillance)",
+        "next": "london_hub",
+        "effects": [
+          {
+            "type": "intel_add",
+            "tag": "surveillance"
+          }
+        ]
+      },
+      {
+        "label": "Follow the money and logistics behind the rallies (gain: coordination)",
+        "next": "london_hub",
+        "effects": [
+          {
+            "type": "intel_add",
+            "tag": "coordination"
+          }
+        ]
+      },
+      {
+        "label": "Check the Grimoire and compare your notes",
+        "next": "hint_grimoire"
+      }
+    ]
+  },
+
+  "hint_grimoire": {
+    "id": "hint_grimoire",
+    "text": "You withdraw to a quiet place and open the Clavicula Salomonis. Patterns begin to form. The names are old, but their methods are modern.",
+    "choices": [
+      {
+        "label": "Return to the city",
+        "next": "london_hub"
+      },
+      {
+        "label": "If identified, prepare a seal (go to Craft tab)",
+        "next": "prepare_seal"
+      }
+    ]
+  },
+
+  "prepare_seal": {
+    "id": "prepare_seal",
+    "text": "A demon of Conquest will not submit to crude ink. You’ll need a proper seal—clean lines, correct materials, no hesitation.",
+    "choices": [
+      {
+        "label": "Attempt confrontation (requires: Crude Fox Seal — placeholder)",
+        "next": "confront",
+        "requires": [
+          {
+            "type": "has_item",
+            "itemId": "crude_fox_seal",
+            "qty": 1
+          }
+        ]
+      },
+      {
+        "label": "Return to investigations",
+        "next": "london_hub"
+      }
+    ]
+  },
+
+  "confront": {
+    "id": "confront",
+    "text": "You step into the flow of the crowd. The chant changes around you—subtly—and for a moment you feel the city thinking with one mind.",
+    "choices": [
+      {
+        "label": "Press the seal and speak the binding (consume seal, lose humanity, attempt bind)",
+        "next": "after_confront",
+        "effects": [
+          {
+            "type": "item_remove",
+            "itemId": "crude_fox_seal",
+            "qty": 1
+          },
+          {
+            "type": "humanity",
+            "delta": -2
+          },
+          {
+            "type": "bind_yokai",
+            "speciesId": "kitsune"
+          }
+        ]
+      },
+      {
+        "label": "Back away",
+        "next": "london_hub"
+      }
+    ]
+  },
+
+  "after_confront": {
+    "id": "after_confront",
+    "text": "The moment passes. The city exhales. Whatever moved beneath the crowd withdraws… for now.",
+    "choices": [
+      {
+        "label": "Return to investigations",
+        "next": "london_hub"
+      }
+    ]
+  },
+
+  "end": {
+    "id": "end",
+    "text": "You leave the case alone. London continues to learn its new rhythm. (Demo end.)",
+    "choices": []
+  }
+}

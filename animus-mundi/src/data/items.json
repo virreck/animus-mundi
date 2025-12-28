@@ -1,0 +1,12 @@
+{
+  "iron_ink": {
+    "id": "iron_ink",
+    "name": "Iron Ink",
+    "type": "material"
+  },
+  "crude_fox_seal": {
+    "id": "crude_fox_seal",
+    "name": "Crude Fox Seal",
+    "type": "seal"
+  }
+}

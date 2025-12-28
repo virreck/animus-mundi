@@ -1,0 +1,18 @@
+{
+  "crude_fox_seal": {
+    "id": "crude_fox_seal",
+    "name": "Crude Fox Seal",
+    "requires": [
+      {
+        "itemId": "iron_ink",
+        "qty": 1
+      }
+    ],
+    "produces": [
+      {
+        "itemId": "crude_fox_seal",
+        "qty": 1
+      }
+    ]
+  }
+}
