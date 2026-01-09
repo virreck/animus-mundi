@@ -51,6 +51,30 @@
       {
         "label": "Check the Grimoire and compare your notes",
         "next": "hint_grimoire"
+      },
+      {
+        "label": "Occult stationer: buy Iron Ink (cost: 2 Obols)",
+        "next": "london_hub",
+        "requires": [{ "type": "has_obols", "qty": 2 }],
+        "effects": [
+          { "type": "obols_spend", "qty": 2 },
+          { "type": "item_add", "itemId": "iron_ink", "qty": 1 }
+        ]
+      },
+      {
+        "label": "Print shop: steal Iron Ink (free, −1 Humanity)",
+        "next": "london_hub",
+        "effects": [
+          { "type": "humanity", "delta": -1 },
+          { "type": "item_add", "itemId": "iron_ink", "qty": 1 }
+        ]
+      },
+      {
+        "label": "Do a small job for an informant (gain: 2 Obols)",
+        "next": "london_hub",
+        "effects": [
+          { "type": "obols_add", "qty": 2 }
+        ]
       }
     ]
   },
@@ -75,15 +99,9 @@
     "text": "A demon of Conquest will not submit to crude ink. You’ll need a proper seal—clean lines, correct materials, no hesitation.",
     "choices": [
       {
-        "label": "Attempt confrontation (requires: Crude Fox Seal — placeholder)",
+        "label": "Attempt confrontation (requires: Seal of the Herald)",
         "next": "confront",
-        "requires": [
-          {
-            "type": "has_item",
-            "itemId": "crude_fox_seal",
-            "qty": 1
-          }
-        ]
+        "requires": [{ "type": "has_item", "itemId": "seal_of_the_herald", "qty": 1 }]
       },
       {
         "label": "Return to investigations",
@@ -100,19 +118,9 @@
         "label": "Press the seal and speak the binding (consume seal, lose humanity, attempt bind)",
         "next": "after_confront",
         "effects": [
-          {
-            "type": "item_remove",
-            "itemId": "crude_fox_seal",
-            "qty": 1
-          },
-          {
-            "type": "humanity",
-            "delta": -2
-          },
-          {
-            "type": "bind_yokai",
-            "speciesId": "kitsune"
-          }
+          { "type": "item_remove", "itemId": "seal_of_the_herald", "qty": 1 },
+          { "type": "humanity", "delta": -3 },
+          { "type": "flag_set", "key": "sealed_herald_of_conquest", "value": true }
         ]
       },
       {
@@ -133,9 +141,19 @@
     ]
   },
 
+"seal_success": {
+  "id": "seal_success",
+  "text": "The seal bites into the air like a lock snapping shut. The crowd exhales. Whatever coordinated the city withdraws—contained, for now.",
+  "choices": [
+    { "label": "Return to the investigation board", "next": "london_hub" }
+  ]
+},
+
   "end": {
     "id": "end",
     "text": "You leave the case alone. London continues to learn its new rhythm. (Demo end.)",
     "choices": []
   }
 }
+
+

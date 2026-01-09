@@ -56,6 +56,8 @@ export default function App() {
         );
     }, [state.humanity]);
 
+    <div style={{ opacity: 0.9 }}>Obols: {state.obols}</div>
+
     return (
         <AppShell activeTab={tab} onTab={setTab} headerRight={headerRight}>
             {tab === "narrative" && <NarrativeView state={state} setState={setState} />}
