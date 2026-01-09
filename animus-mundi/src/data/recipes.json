@@ -14,5 +14,15 @@
         "qty": 1
       }
     ]
+  },
+  "seal_of_the_herald": {
+    "id": "seal_of_The_Herald",
+    "name": "Seal of The Herald",
+    "requires": [
+      {"itemId": "iron_ink", "qty": 2}
+    ],
+    "produces": [
+      {"itemId": "seal_of_the_herald", "qty": 1}
+    ]
   }
 }

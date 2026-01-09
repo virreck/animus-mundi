@@ -59,7 +59,7 @@ export default function App() {
     return (
         <AppShell activeTab={tab} onTab={setTab} headerRight={headerRight}>
             {tab === "narrative" && <NarrativeView state={state} setState={setState} />}
-            {tab == "grimoire" && <GrimoireView state={state} />}
+            {tab == "grimoire" && <GrimoireView state={state} setState={setState} />}
             {tab === "codex" && <CodexView state={state} />}
             {tab === "inventory" && <InventoryView state={state} />}
             {tab === "craft" && <CraftView state={state} setState={setState} />}

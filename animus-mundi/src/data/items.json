@@ -8,5 +8,9 @@
     "id": "crude_fox_seal",
     "name": "Crude Fox Seal",
     "type": "seal"
-  }
+  },
+  "seal_of_the_herald": { 
+    "id": "seal_of_the_herald", 
+    "name": "Seal of the Herald", 
+    "type": "seal" }
 }
