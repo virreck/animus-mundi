@@ -16,7 +16,8 @@ export type Effect =
   | { type: "craft"; recipeId: string }
   | { type: "intel_add"; tag: string; qty?: number }
   | { type: "obols_add"; qty: number }
-  | { type: "obols_spend"; qty: number };
+  | { type: "obols_spend"; qty: number }
+  | { type: "obols_add_chance"; qty: number; chance: number };
 
 export type Choice = {
   label: string;

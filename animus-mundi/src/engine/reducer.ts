@@ -101,6 +101,15 @@ export function applyEffects(state: GameState, effects?: Effect[]) {
         s = { ...s, obols: Math.max(0, s.obols - e.qty) };
         break;
 
+      case "obols_add_chance": {
+        const roll = Math.random(); // 0..1
+        if (roll < e.chance) {
+            s = { ...s, obols: Math.max(0, s.obols + e.qty) };
+        }
+        break;
+        }
+
+
       case "craft": {
         const rec = (recipes as any)[e.recipeId];
         if (!rec) break;
@@ -119,6 +128,7 @@ export function applyEffects(state: GameState, effects?: Effect[]) {
 
       default:
         break;
+        
     }
   }
 

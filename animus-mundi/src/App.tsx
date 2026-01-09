@@ -36,6 +36,7 @@ export default function App() {
         return (
             <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                 <Bar label="Humanity" value={state.humanity} max={100} />
+                <div style={{ opacity: 0.9 }}>Obols: {state.obols}</div>
                 <button
                     onClick={() => {
                         resetState();
@@ -54,9 +55,7 @@ export default function App() {
                 </button>
             </div>
         );
-    }, [state.humanity]);
-
-    <div style={{ opacity: 0.9 }}>Obols: {state.obols}</div>
+    }, [state.humanity, state.obols]);
 
     return (
         <AppShell activeTab={tab} onTab={setTab} headerRight={headerRight}>

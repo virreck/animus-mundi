@@ -70,10 +70,21 @@
         ]
       },
       {
-        "label": "Do a small job for an informant (gain: 2 Obols)",
+        "label": "Search a collapsed protester’s belongings (one-time) (gain: 1 Obol)",
         "next": "london_hub",
+        "requires": [{ "type": "flag_false", "key": "found_obol_london" }],
         "effects": [
-          { "type": "obols_add", "qty": 2 }
+          { "type": "obols_add", "qty": 1 },
+          { "type": "flag_set", "key": "found_obol_london", "value": true }
+        ]
+      },
+      {
+        "label": "Search an unmarked grave (one-time) (20% chance: +1 Obol)",
+        "next": "london_hub",
+        "requires": [{ "type": "flag_false", "key": "searched_grave_london" }],
+        "effects": [
+          { "type": "obols_add_chance", "qty": 1, "chance": 0.2 },
+          { "type": "flag_set", "key": "searched_grave_london", "value": true }
         ]
       }
     ]

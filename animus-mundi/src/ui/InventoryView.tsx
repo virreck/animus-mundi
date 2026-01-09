@@ -9,12 +9,15 @@ export function InventoryView({ state }: { state: GameState }) {
     return (
         <div style={{ border: "1px solid #333", background: "#111", padding: 14 }}>
             <h2 style={{ marginTop: 0 }}>Inventory</h2>
-            {entries.length === 0 && <div style={{ opacity: 0.7 }}>Empty.</div>}
+            <div style={{ marginBottom: 10, opacity: 0.85 }}>
+                <strong>Obols:</strong> {state.obols}
+            </div>
+            {entries.length === 0 && <div style={{ opacity: 0.7 }}>You inventory is empty.</div>}
 
             <ul style={{ margin: 0, paddingLeft: 18 }}>
                 {entries.map(([itemId, qty]) => (
                     <li key={itemId}>
-                        <strong>{itemMap[itemId]?.name ?? itemId}</strong> — x{qty}{" "}
+                        <strong>{itemMap[itemId]?.name ?? itemId}</strong> ï¿½ x{qty}{" "}
                         <span style={{ opacity: 0.7 }}>({itemMap[itemId]?.type ?? "unknown"})</span>
                     </li>
                 ))}
