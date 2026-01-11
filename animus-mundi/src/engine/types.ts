@@ -1,4 +1,6 @@
-export type TabKey = "narrative" | "grimoire" | "codex" | "inventory" | "craft";
+export type TabKey = "narrative" | "grimoire" | "intel" | "codex" | "inventory" | "craft";
+
+export type Reliability = "low" | "medium" | "high";
 
 export type Condition =
   | { type: "has_item"; itemId: string; qty: number }
@@ -15,6 +17,14 @@ export type Effect =
   | { type: "bind_yokai"; speciesId: string }
   | { type: "craft"; recipeId: string }
   | { type: "intel_add"; tag: string; qty?: number }
+  | {
+      type: "intel_note";
+      title: string;
+      body: string;
+      tags: string[];
+      source?: string;
+      reliability?: Reliability;
+    }
   | { type: "obols_add"; qty: number }
   | { type: "obols_spend"; qty: number }
   | { type: "obols_add_chance"; qty: number; chance: number };
@@ -38,12 +48,21 @@ export type YokaiInstance = {
   loyalty: number;
 };
 
+export type IntelEntry = {
+  id: string;
+  createdAt: number;
+  title: string;
+  body: string;
+  source?: string;
+  reliability: Reliability;
+  tags: string[];
+};
+
 export type GameState = {
   currentNodeId: string;
   humanity: number;
   malleusHeat: number;
 
-  // NEW: rare currency
   obols: number;
 
   inventory: Record<string, number>;
@@ -51,8 +70,8 @@ export type GameState = {
   boundYokai: YokaiInstance[];
   flags: Record<string, boolean>;
 
-  // NEW: investigation stickers
   intelTags: Record<string, number>;
+  intelLog: IntelEntry[];
 };
 
 export const initialState: GameState = {
@@ -64,5 +83,6 @@ export const initialState: GameState = {
   discoveredYokai: {},
   boundYokai: [],
   flags: {},
-  intelTags: {}
+  intelTags: {},
+  intelLog: []
 };

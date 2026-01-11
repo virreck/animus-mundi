@@ -37,11 +37,12 @@ export function AppShell(props: {
             >
                 <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                     <div style={{ fontWeight: 800, letterSpacing: 0.5 }}>
-                        Animus Mundi — Micro Build
+                        Animus Mundi ï¿½ Micro Build
                     </div>
                     <nav style={{ display: "flex", gap: 8 }}>
                         <TabButton id="narrative" label="Narrative" />
                         <TabButton id="grimoire" label="Grimoire" />
+                        <TabButton id="intel" label="Intel Log" />
                         <TabButton id="codex" label="Codex" />
                         <TabButton id="inventory" label="Inventory" />
                         <TabButton id="craft" label="Craft" />

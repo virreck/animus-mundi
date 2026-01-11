@@ -10,6 +10,7 @@ import type { GameState, TabKey } from "./engine/types";
 import { initialState } from "./engine/types";
 import { loadState, resetState, saveState } from "./engine/storage";
 import type { ResultLine } from "./engine/results";
+import { IntelLogView } from "./ui/IntelLogView";
 
 function Bar({ label, value, max = 100 }: { label: string; value: number; max?: number }) {
   const pct = Math.max(0, Math.min(100, (value / max) * 100));
@@ -89,6 +90,7 @@ export default function App() {
         {tab === "craft" && (
           <CraftView state={state} setState={setState} pushResults={pushResults} />
         )}
+        {tab === "intel" && <IntelLogView state={state} />}
       </AppShell>
 
       <ToastCenter toasts={toasts} />

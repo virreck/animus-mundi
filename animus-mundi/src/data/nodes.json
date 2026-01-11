@@ -19,33 +19,51 @@
     "text": "You arrive near Westminster. Police lines are calm. Too calm. Cameras pivot as if they recognize you.",
     "choices": [
       {
-        "label": "Investigate the speeches in Trafalgar Square (gain: propaganda)",
+        "label": "Listen to the speeches in Trafalgar Square",
         "next": "london_hub",
+        "requires": [{ "type": "flag_false", "key": "intel_london_speeches" }],
         "effects": [
           {
-            "type": "intel_add",
-            "tag": "propaganda"
-          }
+            "type": "intel_note",
+            "title": "Chants follow a shared script",
+            "body": "Different groups, same phrasing. Call-and-response patterns repeat across accents and demographics—like someone wrote a single script for the city.",
+            "source": "Trafalgar Square",
+            "reliability": "medium",
+            "tags": ["propaganda", "coordination"]
+          },
+          { "type": "flag_set", "key": "intel_london_speeches", "value": true }
         ]
       },
       {
-        "label": "Trace the camera network and patrol routes (gain: surveillance)",
+        "label": "Trace the camera network and patrol routes",
         "next": "london_hub",
+        "requires": [{ "type": "flag_false", "key": "intel_london_cameras" }],
         "effects": [
           {
-            "type": "intel_add",
-            "tag": "surveillance"
-          }
+            "type": "intel_note",
+            "title": "Cameras behave like sentries",
+            "body": "PTZ cameras pivot in sequence. Patrol routes avoid blind spots that no longer exist. The city’s eyes aren’t just watching—they’re being directed.",
+            "source": "Westminster perimeter",
+            "reliability": "high",
+            "tags": ["surveillance", "coordination"]
+          },
+          { "type": "flag_set", "key": "intel_london_cameras", "value": true }
         ]
       },
       {
-        "label": "Follow the money and logistics behind the rallies (gain: coordination)",
+        "label": "Follow the logistics behind the rallies",
         "next": "london_hub",
+        "requires": [{ "type": "flag_false", "key": "intel_london_logistics" }],
         "effects": [
           {
-            "type": "intel_add",
-            "tag": "coordination"
-          }
+            "type": "intel_note",
+            "title": "Logistics are too clean to be organic",
+            "body": "Buses arrive in timed waves. Food and banners appear at exact intervals. Someone is coordinating movement like a supply chain—quiet, efficient, invisible.",
+            "source": "Transport manifests / volunteer schedules",
+            "reliability": "medium",
+            "tags": ["coordination", "mass_psychology"]
+          },
+          { "type": "flag_set", "key": "intel_london_logistics", "value": true }
         ]
       },
       {
@@ -53,7 +71,7 @@
         "next": "hint_grimoire"
       },
       {
-        "label": "Occult stationer: buy Iron Ink (cost: 2 Obols)",
+        "label": "Occult stationer: ask for iron ink",
         "next": "london_hub",
         "requires": [{ "type": "has_obols", "qty": 2 }],
         "effects": [
@@ -62,7 +80,7 @@
         ]
       },
       {
-        "label": "Print shop: steal Iron Ink (free, −1 Humanity)",
+        "label": "Print shop: take what you need and leave",
         "next": "london_hub",
         "effects": [
           { "type": "humanity", "delta": -1 },
@@ -70,7 +88,7 @@
         ]
       },
       {
-        "label": "Search a collapsed protester’s belongings (one-time) (gain: 1 Obol)",
+        "label": "Search a collapsed protester’s belongings",
         "next": "london_hub",
         "requires": [{ "type": "flag_false", "key": "found_obol_london" }],
         "effects": [
@@ -79,7 +97,7 @@
         ]
       },
       {
-        "label": "Search an unmarked grave (one-time) (20% chance: +1 Obol)",
+        "label": "Search an unmarked grave",
         "next": "london_hub",
         "requires": [{ "type": "flag_false", "key": "searched_grave_london" }],
         "effects": [
@@ -88,6 +106,7 @@
         ]
       }
     ]
+
   },
 
   "hint_grimoire": {

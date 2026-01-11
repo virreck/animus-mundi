@@ -25,6 +25,14 @@ export function NarrativeView(props: {
     pushResults(results);
   }
 
+const visibleChoices = node.choices
+  .map((c, i) => ({ c, i }))
+  .filter(({ c }) => {
+    const isOneTime = (c.requires ?? []).some((r) => r.type === "flag_false");
+    if (isOneTime && !meetsConditions(state, c.requires)) return false; // hide completed one-time
+    return true;
+  });
+
   return (
     <div style={{ display: "grid", gap: 14 }}>
       <div style={{ border: "1px solid #333", padding: 14, background: "#111" }}>
@@ -43,30 +51,30 @@ export function NarrativeView(props: {
       </div>
 
       <div style={{ display: "grid", gap: 10 }}>
-        {node.choices.length === 0 && <div style={{ opacity: 0.7 }}>No choices here.</div>}
+  {visibleChoices.length === 0 && <div style={{ opacity: 0.7 }}>No choices here.</div>}
 
-        {node.choices.map((c, i) => {
-          const ok = meetsConditions(state, c.requires);
-          return (
-            <button
-              key={i}
-              onClick={() => choose(i)}
-              disabled={!ok}
-              style={{
-                textAlign: "left",
-                padding: "12px 14px",
-                border: "1px solid #333",
-                background: ok ? "#161616" : "#101010",
-                color: ok ? "#eee" : "#666",
-                cursor: ok ? "pointer" : "not-allowed"
-              }}
-            >
-              {c.label}
-              {!ok && <span style={{ marginLeft: 8, fontSize: 12 }}>(unavailable)</span>}
-            </button>
-          );
-        })}
-      </div>
+  {visibleChoices.map(({ c, i }) => {
+    const ok = meetsConditions(state, c.requires);
+    return (
+      <button
+        key={i}
+        onClick={() => choose(i)}
+        disabled={!ok}
+        style={{
+          textAlign: "left",
+          padding: "12px 14px",
+          border: "1px solid #333",
+          background: ok ? "#161616" : "#101010",
+          color: ok ? "#eee" : "#666",
+          cursor: ok ? "pointer" : "not-allowed"
+        }}
+      >
+        {c.label}
+      </button>
+    );
+  })}
+</div>
+
     </div>
   );
 }

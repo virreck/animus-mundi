@@ -85,6 +85,30 @@ export function applyEffects(state: GameState, effects?: Effect[]) {
         break;
       }
 
+      case "intel_note": {
+        const entry = {
+          id: crypto.randomUUID(),
+          createdAt: Date.now(),
+          title: e.title,
+          body: e.body,
+          source: e.source,
+          reliability: e.reliability ?? "medium",
+          tags: e.tags ?? []
+        };
+
+        // Add to notebook
+        const nextLog = [...(s.intelLog ?? []), entry];
+
+        // Update tag-matching (silently)
+        const nextTags = { ...(s.intelTags ?? {}) };
+        for (const tag of entry.tags) {
+          nextTags[tag] = (nextTags[tag] ?? 0) + 1;
+        }
+
+        s = { ...s, intelLog: nextLog, intelTags: nextTags };
+        break;
+      }
+
       case "intel_add": {
         const amount = e.qty ?? 1;
         const next = { ...s.intelTags };
