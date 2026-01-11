@@ -43,6 +43,7 @@ export function AppShell(props: {
                         <TabButton id="narrative" label="Narrative" />
                         <TabButton id="grimoire" label="Grimoire" />
                         <TabButton id="intel" label="Intel Log" />
+                        <TabButton id="leads" label="Leads" />
                         <TabButton id="codex" label="Codex" />
                         <TabButton id="inventory" label="Inventory" />
                         <TabButton id="craft" label="Craft" />

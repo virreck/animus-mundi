@@ -1,18 +1,28 @@
 {
   "intro": {
-    "id": "intro",
-    "text": "London feels wrong. Not loud-wrong—coordinated-wrong. Posters appear overnight. Chants sync like metronomes. The city is learning to march.",
-    "choices": [
-      {
-        "label": "Review reports and head into the city",
-        "next": "london_hub"
-      },
-      {
-        "label": "Stand down (end demo)",
-        "next": "end"
-      }
-    ]
-  },
+  "id": "intro",
+  "text": "London feels wrong. Not loud-wrong—coordinated-wrong. Posters appear overnight. Chants sync like metronomes. The city is learning to march.",
+  "choices": [
+    {
+      "label": "Review reports and head into the city",
+      "next": "london_hub",
+      "effects": [
+        {
+          "type": "lead_add",
+          "key": "london_unrest",
+          "title": "Unrest, too coordinated to be human",
+          "body": "London’s crowds move like a single organism. Identify what is shaping the message and the movement.",
+          "location": "London"
+        }
+      ]
+    },
+    {
+      "label": "Stand down (end demo)",
+      "next": "end"
+    }
+  ]
+},
+
 
   "london_hub": {
     "id": "london_hub",

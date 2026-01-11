@@ -85,6 +85,33 @@ export function applyEffects(state: GameState, effects?: Effect[]) {
         break;
       }
 
+        case "lead_add": {
+          const existing = s.leads?.[e.key];
+          if (existing) break;
+
+          const lead = {
+            key: e.key,
+            createdAt: Date.now(),
+            title: e.title,
+            body: e.body,
+            location: e.location,
+            status: "active" as const
+          };
+
+          s = { ...s, leads: { ...(s.leads ?? {}), [e.key]: lead } };
+          break;
+        }
+
+        case "lead_resolve": {
+          const existing = s.leads?.[e.key];
+          if (!existing) break;
+          if (existing.status === "resolved") break;
+
+          const updated = { ...existing, status: "resolved" as const, resolvedAt: Date.now() };
+          s = { ...s, leads: { ...(s.leads ?? {}), [e.key]: updated } };
+          break;
+        }
+
       case "intel_note": {
         const entry = {
           id: crypto.randomUUID(),
@@ -95,7 +122,7 @@ export function applyEffects(state: GameState, effects?: Effect[]) {
           reliability: e.reliability ?? "medium",
           tags: e.tags ?? []
         };
-
+      
         // Add to notebook
         const nextLog = [...(s.intelLog ?? []), entry];
 

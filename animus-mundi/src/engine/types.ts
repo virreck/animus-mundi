@@ -1,4 +1,4 @@
-export type TabKey = "narrative" | "grimoire" | "intel" | "codex" | "inventory" | "craft";
+export type TabKey = "narrative" | "grimoire" | "intel" | "leads" | "codex" | "inventory" | "craft";
 
 export type Reliability = "low" | "medium" | "high";
 
@@ -25,6 +25,8 @@ export type Effect =
       source?: string;
       reliability?: Reliability;
     }
+  | { type: "lead_add"; key: string; title: string; body: string; location?: string }
+  | { type: "lead_resolve"; key: string }
   | { type: "obols_add"; qty: number }
   | { type: "obols_spend"; qty: number }
   | { type: "obols_add_chance"; qty: number; chance: number };
@@ -58,6 +60,18 @@ export type IntelEntry = {
   tags: string[];
 };
 
+export type LeadStatus = "active" | "resolved";
+
+export type Lead = {
+  key: string;
+  createdAt: number;
+  resolvedAt?: number;
+  title: string;
+  body: string;
+  location?: string;
+  status: LeadStatus;
+};
+
 export type GameState = {
   currentNodeId: string;
   humanity: number;
@@ -72,6 +86,8 @@ export type GameState = {
 
   intelTags: Record<string, number>;
   intelLog: IntelEntry[];
+
+  leads: Record<string, Lead>;
 };
 
 export const initialState: GameState = {
@@ -84,5 +100,6 @@ export const initialState: GameState = {
   boundYokai: [],
   flags: {},
   intelTags: {},
-  intelLog: []
+  intelLog: [],
+  leads: {}
 };
