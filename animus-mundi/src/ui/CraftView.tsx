@@ -1,7 +1,7 @@
 import type { GameState } from "../engine/types";
 import recipes from "../data/recipes.json";
 import items from "../data/items.json";
-import { applyEffects } from "../engine/reducer";
+import { applyEffectsWithResults, type ResultLine } from "../engine/results";
 
 type Recipe = {
   id: string;
@@ -17,8 +17,12 @@ function hasRequirements(state: GameState, recipe: Recipe) {
   return recipe.requires.every((r) => (state.inventory[r.itemId] ?? 0) >= r.qty);
 }
 
-export function CraftView(props: { state: GameState; setState: (s: GameState) => void }) {
-  const { state, setState } = props;
+export function CraftView(props: {
+  state: GameState;
+  setState: (s: GameState) => void;
+  pushResults: (lines: ResultLine[]) => void;
+}) {
+  const { state, setState, pushResults } = props;
 
   const knowsCrude = state.flags["knows_crude_fox_seal"] === true;
   const demonIdentified = state.flags["identified_herald_of_conquest"] === true;
@@ -27,14 +31,16 @@ export function CraftView(props: { state: GameState; setState: (s: GameState) =>
   const demonRecipe = recipeMap["seal_of_the_herald"];
 
   function craft(recipeId: string) {
-    setState(applyEffects(state, [{ type: "craft", recipeId }]));
+    const { next, results } = applyEffectsWithResults(state, [{ type: "craft", recipeId }]);
+    setState(next);
+    pushResults(results);
   }
 
   return (
     <div style={{ border: "1px solid #333", background: "#111", padding: 14 }}>
       <h2 style={{ marginTop: 0 }}>Craft</h2>
 
-      {/* Crude seal (optional / early-game) */}
+      {/* Crude seal */}
       {!knowsCrude ? (
         <div style={{ opacity: 0.7, marginBottom: 16 }}>
           You don't know any basic seal recipes yet. (Hint: choose "Speak a binding vow".)
@@ -95,7 +101,7 @@ export function CraftView(props: { state: GameState; setState: (s: GameState) =>
         </div>
       )}
 
-      {/* Demon seal (unlocked by identification) */}
+      {/* Demon seal */}
       {!demonIdentified ? (
         <div style={{ marginTop: 16, opacity: 0.7 }}>
           Demon seals are unavailable. Identify the entity in the Grimoire first.
