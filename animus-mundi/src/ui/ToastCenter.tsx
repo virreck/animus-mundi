@@ -10,7 +10,7 @@ export function ToastCenter(props: { toasts: Toast[] }) {
       style={{
         position: "fixed",
         right: 14,
-        bottom: 14,
+        top: 78,
         display: "grid",
         gap: 10,
         zIndex: 9999,

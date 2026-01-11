@@ -41,7 +41,7 @@ export default function App() {
       text: l.text
     }));
 
-    setToasts((prev) => [...prev, ...newToasts]);
+    setToasts((prev) => [...newToasts, ...prev]);
 
     setTimeout(() => {
       setToasts((prev) => prev.filter((t) => !newToasts.some((n) => n.id === t.id)));
