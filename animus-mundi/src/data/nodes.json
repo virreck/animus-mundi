@@ -114,6 +114,36 @@
           { "type": "obols_add_chance", "qty": 1, "chance": 0.2 },
           { "type": "flag_set", "key": "searched_grave_london", "value": true }
         ]
+      },
+      {
+        "label": "Descend into a hidden undercroft (ritual traces linger)",
+        "next": "london_hub",
+        "requires": [{ "type": "flag_false", "key": "found_dbi_london_undercroft" }],
+        "effects": [
+          {
+            "type": "intel_note",
+            "title": "A consecration stain, still wet in spirit",
+            "body": "A red-black residue clings to the stone. Not paint—resin and iron, prepared with intent. Someone here wrote names that should not be written.",
+            "source": "Undercroft beneath the city",
+            "reliability": "high",
+            "tags": ["ritual", "true_name"]
+          },
+          { "type": "item_add", "itemId": "dragons_blood_ink", "qty": 1 },
+          { "type": "flag_set", "key": "found_dbi_london_undercroft", "value": true }
+        ]
+      },
+      {
+        "label": "Occult stationer: request Dragon’s Blood Ink",
+        "next": "london_hub",
+        "requires": [
+          { "type": "has_obols", "qty": 1 },
+          { "type": "flag_false", "key": "bought_dbi_london" }
+        ],
+        "effects": [
+          { "type": "obols_spend", "qty": 1 },
+          { "type": "item_add", "itemId": "dragons_blood_ink", "qty": 1 },
+          { "type": "flag_set", "key": "bought_dbi_london", "value": true }
+        ]
       }
     ]
 

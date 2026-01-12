@@ -12,5 +12,11 @@
   "seal_of_the_herald": { 
     "id": "seal_of_the_herald", 
     "name": "Seal of the Herald", 
-    "type": "seal" }
+    "type": "seal" 
+  },
+    "dragons_blood_ink": {
+  "id": "dragons_blood_ink",
+  "name": "Dragon’s Blood Ink",
+  "type": "material"
+  }
 }

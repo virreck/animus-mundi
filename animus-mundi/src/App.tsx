@@ -47,7 +47,7 @@ export default function App() {
 
     setTimeout(() => {
       setToasts((prev) => prev.filter((t) => !newToasts.some((n) => n.id === t.id)));
-    }, 2500);
+    }, 6000);
   }
 
   useEffect(() => {
@@ -85,7 +85,7 @@ export default function App() {
         {tab === "narrative" && (
           <NarrativeView state={state} setState={setState} pushResults={pushResults} />
         )}
-        {tab === "grimoire" && <GrimoireView state={state} setState={setState} />}
+        {tab === "grimoire" && <GrimoireView state={state} setState={setState} pushResults={pushResults} />}
         {tab === "codex" && <CodexView state={state} />}
         {tab === "inventory" && <InventoryView state={state} />}
         {tab === "craft" && (

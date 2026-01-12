@@ -32,6 +32,8 @@ export function GrimoireView(props: {
     const key = `identified_${entryId}`;
 
     const out = applyEffectsWithResults(state, [
+      { type: "item_remove", itemId: "dragons_blood_ink", qty: 1 },
+
       { type: "flag_set", key, value: true },
 
       // Resolve the initial London lead (if it exists)
@@ -47,9 +49,10 @@ export function GrimoireView(props: {
       }
     ]);
 
-    setState(out.next);
-      const filtered = out.results.filter((r) => r.text !== "Identification confirmed.");
+         const filtered = out.results.filter((r) => r.text !== "Identification confirmed.");
       pushResults([{ kind: "system", text: `Identification confirmed: ${entryName}` }, ...filtered]);  
+
+  setState(out.next);
 }
 
   return (
@@ -67,6 +70,7 @@ export function GrimoireView(props: {
 
       <div style={{ display: "grid", gap: 10 }}>
         {entries.map((e) => {
+          const hasDBI = (state.inventory["dragons_blood_ink"] ?? 0) >= 1;
           const matched = countMatches(state, e.intelRequired);
           const meetsThreshold = matched >= e.identifyAt;
 
@@ -83,38 +87,42 @@ export function GrimoireView(props: {
               }}
             >
               <div style={{ display: "flex", justifyContent: "space-between", gap: 10 }}>
-                <strong>{confirmed ? e.name : meetsThreshold ? e.name : "Unknown Entity"}</strong>
+                <strong>{confirmed ? e.name : "Unknown Entity"}</strong>
                 <span style={{ opacity: 0.85 }}>
                   {confirmed
                     ? "CONFIRMED"
                     : meetsThreshold
-                    ? "IDENTIFIED"
+                    ? "PATTERN FORMED"
                     : `Clues: ${matched}/${e.identifyAt}`}
                 </span>
-              </div>
+                </div>
 
-              <div style={{ marginTop: 8, opacity: 0.8, fontSize: 13 }}>
-                Required Intel: {e.intelRequired.join(", ")}
-              </div>
+                <div style={{ marginTop: 8, opacity: 0.8, fontSize: 13 }}>
+                  Required Intel: {e.intelRequired.join(", ")}
+                </div>
 
-              <p style={{ marginBottom: 10, opacity: confirmed || meetsThreshold ? 0.9 : 0.5 }}>
-                {confirmed || meetsThreshold
-                  ? e.description
-                  : "Your notes are incomplete. The shape of the threat remains indistinct."}
-              </p>
+                <p style={{ marginBottom: 10, opacity: confirmed ? 0.9 : 0.6 }}>
+                  {confirmed
+                    ? e.description
+                    : meetsThreshold
+                    ? "A pattern forms—close enough to name, if you're willing to commit it to ink."
+                    : "Your notes are incomplete. The shape of the threat remains indistinct."}
+                </p>
+
 
               {meetsThreshold && !confirmed && (
                 <button
                   onClick={() => markIdentified(e.id, e.name)}
+                  disabled={!hasDBI}
                   style={{
                     padding: "10px 12px",
                     border: "1px solid #333",
-                    background: "#161616",
-                    color: "#eee",
-                    cursor: "pointer"
+                    background: hasDBI ? "#161616" : "#101010",
+                    color: hasDBI ? "#eee" : "#666",
+                    cursor: hasDBI ? "pointer" : "not-allowed"
                   }}
                 >
-                  Confirm Identification
+                  Inscribe the Name (Dragon’s Blood Ink)
                 </button>
               )}
             </div>
