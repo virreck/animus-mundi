@@ -1,5 +1,6 @@
 import type { GameState } from "../engine/types";
 import grimoire from "../data/grimoire.json";
+import { applyEffectsWithResults, type ResultLine } from "../engine/results";
 
 type GrimoireEntry = {
   id: string;
@@ -23,16 +24,33 @@ function countMatches(state: GameState, required: string[]) {
 export function GrimoireView(props: {
   state: GameState;
   setState: (s: GameState) => void;
+  pushResults: (lines: ResultLine[]) => void;
 }) {
-  const { state, setState } = props;
+  const { state, setState, pushResults } = props;
 
-  function markIdentified(entryId: string) {
+  function markIdentified(entryId: string, entryName: string) {
     const key = `identified_${entryId}`;
-    setState({
-      ...state,
-      flags: { ...state.flags, [key]: true }
-    });
-  }
+
+    const out = applyEffectsWithResults(state, [
+      { type: "flag_set", key, value: true },
+
+      // Resolve the initial London lead (if it exists)
+      { type: "lead_resolve", key: "london_unrest" },
+
+      // Add the next thread: sealing preparation
+      {
+        type: "lead_add",
+        key: `prepare_seal_${entryId}`,
+        title: "A name has surfaced",
+        body: `Prepare a seal appropriate for ${entryName}. The vessel will not hold what is unnamed and unbound.`,
+        location: "London"
+      }
+    ]);
+
+    setState(out.next);
+      const filtered = out.results.filter((r) => r.text !== "Identification confirmed.");
+      pushResults([{ kind: "system", text: `Identification confirmed: ${entryName}` }, ...filtered]);  
+}
 
   return (
     <div style={{ border: "1px solid #333", background: "#111", padding: 14 }}>
@@ -67,7 +85,11 @@ export function GrimoireView(props: {
               <div style={{ display: "flex", justifyContent: "space-between", gap: 10 }}>
                 <strong>{confirmed ? e.name : meetsThreshold ? e.name : "Unknown Entity"}</strong>
                 <span style={{ opacity: 0.85 }}>
-                  {confirmed ? "CONFIRMED" : meetsThreshold ? "IDENTIFIED" : `Clues: ${matched}/${e.identifyAt}`}
+                  {confirmed
+                    ? "CONFIRMED"
+                    : meetsThreshold
+                    ? "IDENTIFIED"
+                    : `Clues: ${matched}/${e.identifyAt}`}
                 </span>
               </div>
 
@@ -83,7 +105,7 @@ export function GrimoireView(props: {
 
               {meetsThreshold && !confirmed && (
                 <button
-                  onClick={() => markIdentified(e.id)}
+                  onClick={() => markIdentified(e.id, e.name)}
                   style={{
                     padding: "10px 12px",
                     border: "1px solid #333",

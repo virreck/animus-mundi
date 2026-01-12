@@ -55,7 +55,7 @@ function pushDiff(results: ResultLine[], prev: GameState, next: GameState) {
 
   for (const key of Object.keys(nextLeads)) {
     if (!prevLeads[key]) {
-      results.push({ kind: "system", text: `Lead added: ${nextLeads[key].title}` });
+      results.push({ kind: "system", text: `New Lead: ${nextLeads[key].title}` });
     }
   }
   for (const key of Object.keys(nextLeads)) {
@@ -75,7 +75,8 @@ function pushDiff(results: ResultLine[], prev: GameState, next: GameState) {
     const before = prev.flags?.[key] ?? false;
     const after = next.flags?.[key] ?? false;
     if (!before && after) {
-      if (key.startsWith("identified_")) results.push({ kind: "system", text: "Identification confirmed." });
+      if (key.startsWith("identified_"))
+        results.push({ kind: "system", text: "Identification confirmed — new lead added." });
       if (key.startsWith("sealed_")) results.push({ kind: "system", text: "Sealed." });
     }
   }
